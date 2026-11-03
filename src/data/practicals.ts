@@ -46,11 +46,11 @@ from sklearn.preprocessing import StandardScaler
 url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
 df = pd.read_csv(url)
 
-print("Original Dataset:")
+print ('''Original Dataset:''')
 print(df.head())
 
 # Check Missing Values
-print("\nMissing Values:")
+print ('''\nMissing Values:''')
 print(df.isnull().sum())
 
 # Handle Missing Values
@@ -68,7 +68,7 @@ scaler = StandardScaler()
 
 df[['Age', 'Fare']] = scaler.fit_transform(df[['Age', 'Fare']])
 
-print("\nPreprocessed Dataset:")
+print ('''\nPreprocessed Dataset:''')
 print(df[['Age', 'Fare', 'Sex', 'Embarked']].head())`,
         output: `Original Dataset:
    PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
@@ -205,11 +205,11 @@ pca_accuracy = accuracy_score(y_test, pca_pred)
 lda_accuracy = accuracy_score(y_test, lda_pred)
 
 # Output
-print("PCA Accuracy :", round(pca_accuracy, 4))
-print("LDA Accuracy :", round(lda_accuracy, 4))
+print ('''PCA Accuracy :''', round(pca_accuracy, 4))
+print ('''LDA Accuracy :''', round(lda_accuracy, 4))
 
-print("PCA Execution Time :", round(pca_time, 4), "seconds")
-print("LDA Execution Time :", round(lda_time, 4), "seconds")`,
+print ('''PCA Execution Time :''', round(pca_time, 4), '''seconds''')
+print ('''LDA Execution Time :''', round(lda_time, 4), '''seconds''')`,
         output: `PCA Accuracy : 0.9912
 LDA Accuracy : 0.9474
 PCA Execution Time : 0.0055 seconds
@@ -273,9 +273,9 @@ mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 r2 = r2_score(y_test, y_pred)
 
-print("MSE :", round(mse, 2))
-print("RMSE :", round(rmse, 2))
-print("R2 Score :", round(r2, 4))`,
+print ('''MSE :''', round(mse, 2))
+print ('''RMSE :''', round(rmse, 2))
+print ('''R2 Score :''', round(r2, 4))`,
         output: `MSE : 2292721545725.36
 RMSE : 1514173.55
 R2 Score : 0.5464`,
@@ -342,9 +342,9 @@ model5 = LinearRegression()
 model5.fit(X5, y)
 pred5 = model5.predict(X5)
 
-print("Degree 2 R2 Score :", round(r2_score(y, pred2), 4))
-print("Degree 3 R2 Score :", round(r2_score(y, pred3), 4))
-print("Degree 5 R2 Score :", round(r2_score(y, pred5), 4))`,
+print ('''Degree 2 R2 Score :''', round(r2_score(y, pred2), 4))
+print ('''Degree 3 R2 Score :''', round(r2_score(y, pred3), 4))
+print ('''Degree 5 R2 Score :''', round(r2_score(y, pred5), 4))`,
         output: `Degree 2 R2 Score : 0.957
 Degree 3 R2 Score : 0.9636
 Degree 5 R2 Score : 0.9644`,
@@ -409,8 +409,8 @@ ridge_pred = ridge.predict(X_test)
 lasso_pred = lasso.predict(X_test)
 
 # Evaluation
-print("Ridge R2 Score:", round(r2_score(y_test, ridge_pred), 4))
-print("Lasso R2 Score:", round(r2_score(y_test, lasso_pred), 4))`,
+print ('''Ridge R2 Score:''', round(r2_score(y_test, ridge_pred), 4))
+print ('''Lasso R2 Score:''', round(r2_score(y_test, lasso_pred), 4))`,
         output: `Ridge R2 Score: 0.7359
 Lasso R2 Score: 0.7364`,
       },
@@ -469,11 +469,11 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 # Output Evaluation Metrics
-print("Confusion Matrix:")
+print ('''Confusion Matrix:''')
 print(confusion_matrix(y_test, y_pred))
-print("Precision:", round(precision_score(y_test, y_pred), 4))
-print("Recall:", round(recall_score(y_test, y_pred), 4))
-print("F1 Score:", round(f1_score(y_test, y_pred), 4))`,
+print ('''Precision:''', round(precision_score(y_test, y_pred), 4))
+print ('''Recall:''', round(recall_score(y_test, y_pred), 4))
+print ('''F1 Score:''', round(f1_score(y_test, y_pred), 4))`,
         output: `Confusion Matrix:
 [[41  2]
  [ 1 70]]
@@ -541,8 +541,8 @@ linear_pred = linear_svm.predict(X_test)
 rbf_pred = rbf_svm.predict(X_test)
 
 # Evaluation
-print("Linear SVM Accuracy:", round(accuracy_score(y_test, linear_pred), 4))
-print("RBF SVM Accuracy:", round(accuracy_score(y_test, rbf_pred), 4))`,
+print ('''Linear SVM Accuracy:''', round(accuracy_score(y_test, linear_pred), 4))
+print ('''RBF SVM Accuracy:''', round(accuracy_score(y_test, rbf_pred), 4))`,
         output: `Linear SVM Accuracy: 0.9561
 RBF SVM Accuracy: 0.9825`,
       },
@@ -586,7 +586,7 @@ for k in range(2, 11):
     kmeans.fit(X)
     wcss.append(kmeans.inertia_)
     score = silhouette_score(X, kmeans.labels_)
-    print("K =", k, "| Silhouette Score =", round(score, 4))`,
+    print ('''K =''', k, '''| Silhouette Score =''', round(score, 4))`,
         output: `K = 2 | Silhouette Score = 0.681
 K = 3 | Silhouette Score = 0.5512
 K = 4 | Silhouette Score = 0.4976
@@ -643,15 +643,15 @@ X_scaled = scaler.fit_transform(X)
 dbscan = DBSCAN(eps=0.5, min_samples=5)
 clusters = dbscan.fit_predict(X_scaled)
 
-print("Cluster Labels:")
+print ('''Cluster Labels:''')
 print(clusters)
 
 # Count Clusters and Noise
 n_clusters = len(set(clusters)) - (1 if -1 in clusters else 0)
 n_noise = list(clusters).count(-1)
 
-print("Number of Clusters:", n_clusters)
-print("Number of Noise Points:", n_noise)
+print ('''Number of Clusters:''', n_clusters)
+print ('''Number of Noise Points:''', n_noise)
 
 # Visualization
 plt.figure(figsize=(8, 6))
@@ -733,11 +733,11 @@ rf_pred = rf.predict(X_test)
 ab_pred = ab.predict(X_test)
 
 # Accuracy Scores
-print("Decision Tree Accuracy:", round(accuracy_score(y_test, dt_pred), 4))
-print("Random Forest Accuracy:", round(accuracy_score(y_test, rf_pred), 4))
-print("AdaBoost Accuracy:", round(accuracy_score(y_test, ab_pred), 4))
+print ('''Decision Tree Accuracy:''', round(accuracy_score(y_test, dt_pred), 4))
+print ('''Random Forest Accuracy:''', round(accuracy_score(y_test, rf_pred), 4))
+print ('''AdaBoost Accuracy:''', round(accuracy_score(y_test, ab_pred), 4))
 
-print(" \nClassification Report (Random Forest):")
+print (''' \nClassification Report (Random Forest):''')
 print(classification_report(y_test, rf_pred))`,
         output: `Decision Tree Accuracy: 0.9474
 Random Forest Accuracy: 0.9649
@@ -818,12 +818,12 @@ for episode in range(episodes):
         state = next_state
 
 # Display Results
-print("Q Table:")
+print ('''Q Table:''')
 print(np.round(Q, 2))
 
 policy = np.argmax(Q, axis=1)
 
-print(" \nOptimal Policy:")
+print (''' \nOptimal Policy:''')
 print(policy)`,
         output: `Q Table:
 [[ 48.33  49.12  47.98  52.41]
