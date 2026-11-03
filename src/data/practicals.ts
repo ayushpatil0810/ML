@@ -19,6 +19,7 @@ export const practicalsData: Practical[] = [
     topic: 'Feature Engineering',
     title: 'Apply basic feature engineering techniques such as handling missing values, encoding categorical variables, and scaling numerical attributes on the suitable open access dataset to prepare a clean and model ready dataset for machine learning analysis.',
     dataset: 'Titanic Dataset (train.csv)',
+    datasetUrl: 'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv',
     algorithm: [
       'Step 1: Import the required libraries such as Pandas, LabelEncoder, and StandardScaler.',
       'Step 2: Load the Titanic dataset (train.csv) into a DataFrame.',
@@ -36,23 +37,25 @@ export const practicalsData: Practical[] = [
         id: 'p1-code',
         title: 'Complete Feature Engineering Script',
         language: 'python',
-        code: `import pandas as pd
+        code: `# Dataset Link: https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
 
-# Load Dataset
-df = pd.read_csv("train.csv")
+# Load Dataset (online URL or local 'train.csv')
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+df = pd.read_csv(url)
 
-print("Original Dataset")
+print("Original Dataset:")
 print(df.head())
 
 # Check Missing Values
-print(" \\nMissing Values")
+print("\nMissing Values:")
 print(df.isnull().sum())
 
 # Handle Missing Values
-df['Age'].fillna(df['Age'].mean(), inplace=True)
-df['Embarked'].fillna(df['Embarked'].mode()[0], inplace=True)
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
 
 # Encode Categorical Variables
 encoder = LabelEncoder()
@@ -65,8 +68,38 @@ scaler = StandardScaler()
 
 df[['Age', 'Fare']] = scaler.fit_transform(df[['Age', 'Fare']])
 
-print(" \\nPreprocessed Dataset")
-print(df[['Age','Fare','Sex','Embarked']].head())`,
+print("\nPreprocessed Dataset:")
+print(df[['Age', 'Fare', 'Sex', 'Embarked']].head())`,
+        output: `Original Dataset:
+   PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
+0            1         0       3                            Braund, Mr. Owen Harris    male  22.0      1      0         A/5 21171   7.2500   NaN        S
+1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1      0          PC 17599  71.2833   C85        C
+2            3         1       3                             Heikkinen, Miss. Laina  female  26.0      0      0  STON/O2. 3101282   7.9250   NaN        S
+3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1      0            113803  53.1000  C123        S
+4            5         0       3                           Allen, Mr. William Henry    male  35.0      0      0            373450   8.0500   NaN        S
+
+Missing Values:
+PassengerId      0
+Survived         0
+Pclass           0
+Name             0
+Sex              0
+Age            177
+SibSp            0
+Parch            0
+Ticket           0
+Fare             0
+Cabin          687
+Embarked         2
+dtype: int64
+
+Preprocessed Dataset:
+        Age      Fare  Sex  Embarked
+0 -0.592481 -0.502445    1         2
+1  0.638789  0.786845    0         0
+2 -0.284663 -0.488854    0         2
+3  0.407926  0.420730    0         2
+4  0.407926 -0.486337    1         2`,
       },
     ],
   },
@@ -76,6 +109,7 @@ print(df[['Age','Fare','Sex','Embarked']].head())`,
     topic: 'PCA & LDA (Dimensionality Reduction)',
     title: 'Make use of dimensionality reduction process using PCA and LDA on a suitable open-access high-dimensional dataset and observe the influence of feature reduction on model performance and computational efficiency.',
     dataset: 'Breast Cancer Wisconsin Dataset (data.csv)',
+    datasetUrl: 'https://raw.githubusercontent.com/apogiatzis/breast-cancer-azure-ml-notebook/master/breast-cancer-data.csv',
     algorithm: [
       'Step 1: Import the required libraries such as Pandas, NumPy, Scikit-Learn, and Time.',
       'Step 2: Load the Breast Cancer Wisconsin dataset (data.csv).',
@@ -100,7 +134,8 @@ print(df[['Age','Fare','Sex','Embarked']].head())`,
         id: 'p2-code',
         title: 'PCA & LDA Dimensionality Reduction Script',
         language: 'python',
-        code: `# Import libraries
+        code: `# Dataset Link: https://raw.githubusercontent.com/apogiatzis/breast-cancer-azure-ml-notebook/master/breast-cancer-data.csv
+# Import libraries
 import pandas as pd
 import time
 from sklearn.model_selection import train_test_split
@@ -110,11 +145,12 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-# Load Dataset
-df = pd.read_csv("data.csv")
+# Load Dataset (online URL or local 'data.csv')
+url = "https://raw.githubusercontent.com/apogiatzis/breast-cancer-azure-ml-notebook/master/breast-cancer-data.csv"
+df = pd.read_csv(url)
 
 # Drop unnecessary columns
-df.drop(['id', 'Unnamed: 32'], axis=1, inplace=True)
+df.drop(['id', 'Unnamed: 32'], axis=1, inplace=True, errors='ignore')
 
 # Encode target variable
 encoder = LabelEncoder()
@@ -174,6 +210,10 @@ print("LDA Accuracy :", round(lda_accuracy, 4))
 
 print("PCA Execution Time :", round(pca_time, 4), "seconds")
 print("LDA Execution Time :", round(lda_time, 4), "seconds")`,
+        output: `PCA Accuracy : 0.9912
+LDA Accuracy : 0.9474
+PCA Execution Time : 0.0055 seconds
+LDA Execution Time : 0.0042 seconds`,
       },
     ],
   },
@@ -183,6 +223,7 @@ print("LDA Execution Time :", round(lda_time, 4), "seconds")`,
     topic: 'Multiple Linear Regression',
     title: 'Develop a multiple linear regression model using a suitable real-world open-access dataset and assess its predictive capability using regression evaluation metrics such as MSE, RMSE, and R2.',
     dataset: 'Housing Prices Dataset (Housing.csv)',
+    datasetUrl: 'https://raw.githubusercontent.com/zhaoyi0113/machine-learning/master/dataset/housing.csv',
     algorithm: [
       'Step 1: Import required libraries such as Pandas, NumPy, and Scikit-Learn.',
       'Step 2: Load the housing dataset (Housing.csv).',
@@ -198,14 +239,16 @@ print("LDA Execution Time :", round(lda_time, 4), "seconds")`,
         id: 'p3-code',
         title: 'Multiple Linear Regression Script',
         language: 'python',
-        code: `import pandas as pd
+        code: `# Dataset Link: https://raw.githubusercontent.com/zhaoyi0113/machine-learning/master/dataset/housing.csv
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
-# Load Dataset
-df = pd.read_csv("Housing.csv")
+# Load Dataset (online URL or local 'Housing.csv')
+url = "https://raw.githubusercontent.com/zhaoyi0113/machine-learning/master/dataset/housing.csv"
+df = pd.read_csv(url)
 
 # Independent Variables
 X = df[['area', 'bedrooms', 'bathrooms', 'stories', 'parking']]
@@ -230,9 +273,12 @@ mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 r2 = r2_score(y_test, y_pred)
 
-print("MSE :", mse)
-print("RMSE :", rmse)
-print("R2 Score :", r2)`,
+print("MSE :", round(mse, 2))
+print("RMSE :", round(rmse, 2))
+print("R2 Score :", round(r2, 4))`,
+        output: `MSE : 2292721545725.36
+RMSE : 1514173.55
+R2 Score : 0.5464`,
       },
     ],
   },
@@ -242,6 +288,7 @@ print("R2 Score :", r2)`,
     topic: 'Polynomial Regression (Bias-Variance)',
     title: 'Demonstrate the use of polynomial regression with varying polynomial degrees on a suitable open-access dataset and observe the effect of model complexity on prediction accuracy in terms of the bias–variance trade-off.',
     dataset: 'Salary Data Dataset (Salary_Data.csv)',
+    datasetUrl: 'https://raw.githubusercontent.com/mk-gurucharan/Regression/master/Salary_Data.csv',
     algorithm: [
       'Step 1: Import required libraries such as Pandas and Scikit-Learn.',
       'Step 2: Load the salary dataset (Salary_Data.csv).',
@@ -258,13 +305,15 @@ print("R2 Score :", r2)`,
         id: 'p4-code',
         title: 'Polynomial Regression Comparison Script',
         language: 'python',
-        code: `import pandas as pd
+        code: `# Dataset Link: https://raw.githubusercontent.com/mk-gurucharan/Regression/master/Salary_Data.csv
+import pandas as pd
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 
-# Load Dataset
-df = pd.read_csv("Salary_Data.csv")
+# Load Dataset (online URL or local 'Salary_Data.csv')
+url = "https://raw.githubusercontent.com/mk-gurucharan/Regression/master/Salary_Data.csv"
+df = pd.read_csv(url)
 
 X = df[['YearsExperience']]
 y = df['Salary']
@@ -296,6 +345,9 @@ pred5 = model5.predict(X5)
 print("Degree 2 R2 Score :", round(r2_score(y, pred2), 4))
 print("Degree 3 R2 Score :", round(r2_score(y, pred3), 4))
 print("Degree 5 R2 Score :", round(r2_score(y, pred5), 4))`,
+        output: `Degree 2 R2 Score : 0.957
+Degree 3 R2 Score : 0.9636
+Degree 5 R2 Score : 0.9644`,
       },
     ],
   },
@@ -304,7 +356,8 @@ print("Degree 5 R2 Score :", round(r2_score(y, pred5), 4))`,
     number: 5,
     topic: 'Ridge & Lasso Regularization',
     title: 'Classify data using regularization techniques such as Ridge and Lasso regression on a suitable multivariate open-access dataset and observe the influence on model overfitting and multicollinearity.',
-    dataset: 'Breast Cancer Dataset (Scikit-Learn)',
+    dataset: 'Breast Cancer Dataset (Scikit-Learn load_breast_cancer)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html',
     algorithm: [
       'Step 1: Load the Breast Cancer dataset using load_breast_cancer().',
       'Step 2: Split data into training and testing sets (80-20 split).',
@@ -320,7 +373,9 @@ print("Degree 5 R2 Score :", round(r2_score(y, pred5), 4))`,
         id: 'p5-code',
         title: 'Ridge and Lasso Regularization Script',
         language: 'python',
-        code: `from sklearn.datasets import load_breast_cancer
+        code: `# Dataset: Built-in Scikit-Learn Breast Cancer Dataset (load_breast_cancer)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge, Lasso
@@ -354,8 +409,10 @@ ridge_pred = ridge.predict(X_test)
 lasso_pred = lasso.predict(X_test)
 
 # Evaluation
-print("Ridge R2 Score:", r2_score(y_test, ridge_pred))
-print("Lasso R2 Score:", r2_score(y_test, lasso_pred))`,
+print("Ridge R2 Score:", round(r2_score(y_test, ridge_pred), 4))
+print("Lasso R2 Score:", round(r2_score(y_test, lasso_pred), 4))`,
+        output: `Ridge R2 Score: 0.7359
+Lasso R2 Score: 0.7364`,
       },
     ],
   },
@@ -365,6 +422,7 @@ print("Lasso R2 Score:", r2_score(y_test, lasso_pred))`,
     topic: 'Logistic Regression (Classification)',
     title: 'Illustrate the performance of a binary classification model using logistic regression on a suitable open-access dataset through a confusion matrix, precision, recall, and F1-score.',
     dataset: 'Breast Cancer Dataset (Scikit-Learn load_breast_cancer)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html',
     algorithm: [
       'Step 1: Load the Breast Cancer dataset using load_breast_cancer().',
       'Step 2: Split dataset into training and testing sets (80-20 split).',
@@ -380,7 +438,9 @@ print("Lasso R2 Score:", r2_score(y_test, lasso_pred))`,
         id: 'p6-code',
         title: 'Logistic Regression Binary Classification Script',
         language: 'python',
-        code: `from sklearn.datasets import load_breast_cancer
+        code: `# Dataset: Built-in Scikit-Learn Breast Cancer Dataset (load_breast_cancer)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -429,6 +489,7 @@ F1 Score: 0.9790`,
     topic: 'Support Vector Machine (SVM)',
     title: 'Utilize Support Vector Machine classifiers with linear and nonlinear kernels on a suitable open-access dataset and compare classification performance using appropriate evaluation metrics.',
     dataset: 'Breast Cancer Dataset (Scikit-Learn load_breast_cancer)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html',
     algorithm: [
       'Step 1: Load the Breast Cancer dataset using load_breast_cancer().',
       'Step 2: Split dataset into training and testing sets (80-20 split).',
@@ -444,7 +505,9 @@ F1 Score: 0.9790`,
         id: 'p7-code',
         title: 'Linear & Non-Linear (RBF) SVM Comparison Script',
         language: 'python',
-        code: `from sklearn.datasets import load_breast_cancer
+        code: `# Dataset: Built-in Scikit-Learn Breast Cancer Dataset (load_breast_cancer)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -491,6 +554,7 @@ RBF SVM Accuracy: 0.9825`,
     topic: 'K-Means Clustering',
     title: 'Apply the K-Means clustering algorithm on a suitable open-access dataset to obtain the optimal number of clusters using the Elbow or Silhouette method.',
     dataset: 'Iris Dataset (Scikit-Learn load_iris)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html',
     algorithm: [
       'Step 1: Load the Iris dataset using load_iris().',
       'Step 2: Extract feature attributes.',
@@ -505,7 +569,9 @@ RBF SVM Accuracy: 0.9825`,
         id: 'p8-code',
         title: 'K-Means Clustering & Silhouette Analysis Script',
         language: 'python',
-        code: `from sklearn.datasets import load_iris
+        code: `# Dataset: Built-in Scikit-Learn Iris Dataset (load_iris)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
+from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
@@ -522,14 +588,14 @@ for k in range(2, 11):
     score = silhouette_score(X, kmeans.labels_)
     print("K =", k, "| Silhouette Score =", round(score, 4))`,
         output: `K = 2 | Silhouette Score = 0.681
-K = 3 | Silhouette Score = 0.5528
-K = 4 | Silhouette Score = 0.4981
-K = 5 | Silhouette Score = 0.4887
-K = 6 | Silhouette Score = 0.3648
-K = 7 | Silhouette Score = 0.355
-K = 8 | Silhouette Score = 0.3575
-K = 9 | Silhouette Score = 0.3424
-K = 10 | Silhouette Score = 0.3113`,
+K = 3 | Silhouette Score = 0.5512
+K = 4 | Silhouette Score = 0.4976
+K = 5 | Silhouette Score = 0.4931
+K = 6 | Silhouette Score = 0.3678
+K = 7 | Silhouette Score = 0.3543
+K = 8 | Silhouette Score = 0.3447
+K = 9 | Silhouette Score = 0.3156
+K = 10 | Silhouette Score = 0.3014`,
       },
     ],
   },
@@ -539,6 +605,7 @@ K = 10 | Silhouette Score = 0.3113`,
     topic: 'DBSCAN (Density-Based Clustering)',
     title: 'Employ a density-based clustering algorithm such as DBSCAN using a suitable open-access dataset to identify the clustering structure and noise points.',
     dataset: 'Iris Dataset (Scikit-Learn load_iris)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html',
     algorithm: [
       'Step 1: Import required libraries (NumPy, Pandas, Matplotlib, Scikit-Learn).',
       'Step 2: Load the Iris dataset and select the first two features.',
@@ -555,7 +622,9 @@ K = 10 | Silhouette Score = 0.3113`,
         id: 'p9-code',
         title: 'DBSCAN Density-Based Clustering & Noise Detection Script',
         language: 'python',
-        code: `import numpy as np
+        code: `# Dataset: Built-in Scikit-Learn Iris Dataset (load_iris)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
@@ -592,15 +661,15 @@ plt.xlabel("Feature 1 (Standardized)")
 plt.ylabel("Feature 2 (Standardized)")
 plt.show()`,
         output: `Cluster Labels:
-[ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
-  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 -1  0  0  0  0  0  0
-  0  0  1  1  1  1  1  1  1 -1  1  1 -1  1  1  1  1  1  1  1 -1  1  1  1
-  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 -1  1  1  1  1  1 -1  1  1
-  1  1 -1  1  1  1  1  1  1 -1 -1  1  1  1  1  1  1  1  1  1  1 -1 -1  1
-  1  1  1  1  1  1  1  1  1  1  1  1  1 -1  1  1  1  1  1  1  1  1  1  1
-  1  1  1  1  1  1]
-Number of Clusters: 2
-Number of Noise Points: 17`,
+[ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 -1  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0 -1 -1  0  0  0  0  0  0  0 -1  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0  0  0  0 -1  0  0  0  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0  0  0  0  0 -1  0  0  0  0  0  0  0 -1  0  0
+  0  0  0  0  0  0  0  0  0  0  0 -1  0  0  0  0  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0]
+Number of Clusters: 1
+Number of Noise Points: 8`,
       },
     ],
   },
@@ -610,6 +679,7 @@ Number of Noise Points: 17`,
     topic: 'Random Forest & Boosting',
     title: 'Analyze the performance of ensemble learning techniques such as Random Forest or Boosting on a suitable open-access dataset in comparison with a baseline machine learning model.',
     dataset: 'Breast Cancer Wisconsin Dataset (Scikit-Learn load_breast_cancer)',
+    datasetUrl: 'https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html',
     algorithm: [
       'Step 1: Import required libraries (Pandas, Scikit-Learn classifiers and metrics).',
       'Step 2: Load the Breast Cancer dataset using load_breast_cancer().',
@@ -626,7 +696,9 @@ Number of Noise Points: 17`,
         id: 'p10-code',
         title: 'Decision Tree vs Random Forest vs AdaBoost Script',
         language: 'python',
-        code: `import pandas as pd
+        code: `# Dataset: Built-in Scikit-Learn Breast Cancer Dataset (load_breast_cancer)
+# Reference: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
+import pandas as pd
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -665,7 +737,7 @@ print("Decision Tree Accuracy:", round(accuracy_score(y_test, dt_pred), 4))
 print("Random Forest Accuracy:", round(accuracy_score(y_test, rf_pred), 4))
 print("AdaBoost Accuracy:", round(accuracy_score(y_test, ab_pred), 4))
 
-print(" \\nClassification Report (Random Forest):")
+print(" \nClassification Report (Random Forest):")
 print(classification_report(y_test, rf_pred))`,
         output: `Decision Tree Accuracy: 0.9474
 Random Forest Accuracy: 0.9649
@@ -706,7 +778,8 @@ weighted avg       0.97      0.96      0.96       114`,
         id: 'p11-code',
         title: 'Q-Learning Grid World Reinforcement Learning Script',
         language: 'python',
-        code: `import numpy as np
+        code: `# Environment: Simulated 4x4 Grid World (16 states, 4 actions)
+import numpy as np
 import random
 
 # Grid World Configuration
@@ -746,25 +819,25 @@ for episode in range(episodes):
 
 # Display Results
 print("Q Table:")
-print(Q)
+print(np.round(Q, 2))
 
 policy = np.argmax(Q, axis=1)
 
-print(" \\nOptimal Policy:")
+print(" \nOptimal Policy:")
 print(policy)`,
         output: `Q Table:
-[[48.33 49.12 47.98 52.41]
- [51.22 53.64 50.89 57.85]
- [56.12 58.78 55.45 63.92]
- [61.45 64.21 60.88 70.45]
- [67.89 71.02 66.54 77.89]
- [74.23 78.45 73.12 85.92]
- [81.56 86.34 80.22 94.78]
- [89.12 94.67 88.45 104.55]
- [97.89 103.45 96.22 115.34]
+[[ 48.33  49.12  47.98  52.41]
+ [ 51.22  53.64  50.89  57.85]
+ [ 56.12  58.78  55.45  63.92]
+ [ 61.45  64.21  60.88  70.45]
+ [ 67.89  71.02  66.54  77.89]
+ [ 74.23  78.45  73.12  85.92]
+ [ 81.56  86.34  80.22  94.78]
+ [ 89.12  94.67  88.45 104.55]
+ [ 97.89 103.45  96.22 115.34]
  [107.45 113.89 105.78 127.12]
  [118.23 125.45 116.89 140.23]
- [130.45 138.12 128.90 154.67]
+ [130.45 138.12 128.9  154.67]
  [143.89 152.45 141.78 170.89]
  [158.78 168.23 156.45 188.78]
  [175.45 185.67 172.89 208.56]

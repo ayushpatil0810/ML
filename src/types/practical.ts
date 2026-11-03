@@ -14,6 +14,7 @@ export interface Practical {
   title: string; // Full objective / title from syllabus
   description?: string;
   dataset?: string;
+  datasetUrl?: string;
   algorithm?: string[];
   category?: string;
   codeBlocks: CodeBlock[];

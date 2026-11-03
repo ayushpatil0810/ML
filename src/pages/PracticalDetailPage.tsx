@@ -9,6 +9,7 @@ import {
   AlertCircle,
   Code2,
   Database,
+  ExternalLink,
   ListOrdered,
   ChevronDown,
   ChevronUp,
@@ -166,10 +167,24 @@ export const PracticalDetailPage: React.FC = () => {
 
         {practical.dataset && (
           <div className="dataset-badge-container">
-            <span className="dataset-badge">
-              <Database size={13} />
-              <span>Dataset: <strong>{practical.dataset}</strong></span>
-            </span>
+            {practical.datasetUrl ? (
+              <a
+                href={practical.datasetUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dataset-badge dataset-link"
+                title={`Open dataset source for ${practical.dataset}`}
+              >
+                <Database size={13} />
+                <span>Dataset: <strong>{practical.dataset}</strong></span>
+                <ExternalLink size={12} className="dataset-link-icon" />
+              </a>
+            ) : (
+              <span className="dataset-badge">
+                <Database size={13} />
+                <span>Dataset: <strong>{practical.dataset}</strong></span>
+              </span>
+            )}
           </div>
         )}
 

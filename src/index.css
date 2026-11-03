@@ -550,6 +550,26 @@ body {
   border: 1px solid var(--border-card);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+a.dataset-badge:hover {
+  border-color: #444444;
+  color: var(--text-white);
+  background-color: #161616;
+  text-decoration: none;
+}
+
+.dataset-link-icon {
+  margin-left: 2px;
+  opacity: 0.6;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+a.dataset-badge:hover .dataset-link-icon {
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .dataset-badge strong {
